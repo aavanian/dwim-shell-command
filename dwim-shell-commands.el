@@ -780,8 +780,10 @@ EOF"
                                (cons (nth 1 (split-string device " - "))
                                      (nth 0 (split-string device " - "))))
                              devices))
-         (selected-name (completing-read "Toggle connection: "
-                                         (seq-sort #'string-lessp candidates) nil t))
+         (selected-name (completing-read "Toggle BT connection: "
+                                         (seq-sort (lambda (a b)
+                                                     (string-lessp (car a) (car b)))
+                                                   candidates) nil t))
          (address (map-elt candidates selected-name)))
     (dwim-shell-command-on-marked-files
      (format "Toggle %s" selected-name)
